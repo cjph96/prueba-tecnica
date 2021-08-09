@@ -1,0 +1,67 @@
+version: '3'
+
+services:
+
+    # nginx
+    nginx-service:
+        image: nginx:stable-alpine
+        container_name: nginx-container
+        restart: always
+        ports:
+            - "8081:81"
+        volumes:
+            - ./backend:/var/www/html
+            - ./frontend:/var/www/project
+            - ./processes/nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - php74-service
+            - mariadb-service
+
+    # php
+    php74-service:
+        build:
+            context: .
+            dockerfile: ./processes/php/Dockerfile
+        container_name: php74-container
+        restart: always
+        volumes:
+            - ./backend:/var/www/html
+
+    # mysql
+    mariadb-service:
+        image: mariadb:10.5.8
+        container_name: mariadb-container
+        ports:
+            - "3306:3306"
+        volumes:
+            - ./processes/mysql:/var/lib/mysql
+        restart: always 
+        command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        environment:
+            MYSQL_DATABASE: database
+            MYSQL_USER: user
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_PASSWORD: root
+
+    #phpmyadmin
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin:5.0.1
+        restart: always
+        environment:
+            PMA_ARBITRARY: 1
+            PMA_HOST: mariadb
+        ports:
+            - "8082:80"
+    # node
+    node-service:
+        build:
+            context: .
+            dockerfile: ./processes/node/Dockerfile
+        container_name: node-container
+        restart: always
+        volumes:
+            - ./frontend:/var/www/project
+        stdin_open: true
+        tty: true
+        ports:
+            - "8080:8080"
