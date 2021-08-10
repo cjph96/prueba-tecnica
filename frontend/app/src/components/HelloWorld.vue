@@ -29,13 +29,13 @@ export default {
     msg: String
   },
   data() {
-    fetch("http://127.0.0.1:8081/lucky/number", {
+    /*fetch("http://127.0.0.1:8081/lucky/number", {
       //mode: 'no-cors'
     }) 
         .then(response => response.json())
         .then(data => {
           console.log(data)
-        });
+        });*/
   }
 }
 </script>

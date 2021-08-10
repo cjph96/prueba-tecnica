@@ -8,8 +8,11 @@
 return [
     false, // $matchHost
     [ // $staticRoutes
-        '/lucky/number' => [[['_route' => 'app_lucky_number', '_controller' => 'App\\Controller\\LuckyController::number'], null, null, null, false, false, null]],
-        '/api/process/add' => [[['_route' => 'app_process_number', '_controller' => 'App\\Controller\\ProcessController::number'], null, null, null, false, false, null]],
+        '/' => [[['_route' => 'app_defaultcontrolller_default', '_controller' => 'App\\Controller\\DefaultControlller::default'], null, null, null, false, false, null]],
+        '/api/process' => [
+            [['_route' => 'app_process_all', '_controller' => 'App\\Controller\\ProcessController::all'], null, ['GET' => 0], null, false, false, null],
+            [['_route' => 'app_process_add', '_controller' => 'App\\Controller\\ProcessController::add'], null, ['POST' => 0], null, false, false, null],
+        ],
     ],
     [ // $regexpList
         0 => '{^(?'
