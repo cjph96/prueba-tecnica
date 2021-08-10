@@ -16,11 +16,17 @@ return [
     ],
     [ // $regexpList
         0 => '{^(?'
-                .'|/_error/(\\d+)(?:\\.([^/]++))?(*:35)'
+                .'|/api/process/([^/]++)/(?'
+                    .'|finished(*:40)'
+                    .'|start(*:52)'
+                .')'
+                .'|/_error/(\\d+)(?:\\.([^/]++))?(*:88)'
             .')/?$}sDu',
     ],
     [ // $dynamicRoutes
-        35 => [
+        40 => [[['_route' => 'app_process_finished', '_controller' => 'App\\Controller\\ProcessController::finished'], ['id_process'], ['POST' => 0], null, false, false, null]],
+        52 => [[['_route' => 'app_process_start', '_controller' => 'App\\Controller\\ProcessController::start'], ['id_process'], ['POST' => 0], null, false, false, null]],
+        88 => [
             [['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

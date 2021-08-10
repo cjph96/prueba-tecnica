@@ -31,12 +31,12 @@
             <td>{{process.created_at.date}}</td>
 
             <td v-if="process.started_at !== null">
-              {{process.started_at.data}}
+              {{process.started_at.date}}
             </td>
             <td v-else></td>
 
             <td v-if="process.finished_at !== null">
-              {{process.finished_at.data}}
+              {{process.finished_at.date}}
             </td>
             <td v-else></td>
 
@@ -49,9 +49,12 @@
             <td v-if="process.status == 3">
               FINISHED
             </td>
+            <td v-if="process.status == 4">
+              ERROR
+            </td>
 
             <td v-if="process.status == 1">
-              <button>▶ Start</button>
+              <button @click="star_processes(process.id)">▶ Start</button>
             </td>
             <td v-else></td>
           </tr>
@@ -69,6 +72,7 @@ export default {
       msg: String
   },*/
   data() {
+    console.log(window.location.hostname)
     return {
       processes: []
     }
@@ -76,12 +80,25 @@ export default {
   methods:{
 
     async  get_processes(){
-      this.processes = await fetch("http://127.0.0.1:8081/api/process", {
+      const url = "http://"+ window.location.hostname +":8081/api/process"
+      this.processes = await fetch(url, {
       }) 
         .then(response => response.json())
         .then(data => {
           return data;
         });
+    },
+
+    async star_processes(id){
+      const url = "http://"+ window.location.hostname +":8081/api/process/"+ id +"/start"
+      await fetch(url, {
+        method: 'POST',
+      }) 
+        .then(response => response.json())
+        .then(data => {
+          console.log( data)
+        });
+      this.get_processes() //Refrescamos la lista
     }
 
   },

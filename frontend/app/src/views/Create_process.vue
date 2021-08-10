@@ -59,13 +59,15 @@ export default {
         "input": this.input
       }
 
-      this.resp = await fetch("http://127.0.0.1:8081/api/process", {
+      const url = "http://"+ window.location.hostname +":8081/api/process"
+      this.resp = await fetch(url, {
         method: 'POST',
         cache: 'no-cache',
         headers: {
           //'Content-Type': 'application/json'
         },
         body: JSON.stringify(data_submit)
+        //body: data_submit
       })
         .then(response => response.json())
         .then(data => {
