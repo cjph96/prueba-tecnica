@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Create process</router-link> |
-      <router-link to="/list_processes">List processes</router-link>
+    <div class="nav mt-2" id="nav">
+      <router-link class="text-dark pl-4" to="/">Create process</router-link>
+      <router-link class="text-dark pl-4" to="/list_processes">List processes</router-link>
     </div>
+    <hr>
     <router-view/>
   </div>
 </template>
@@ -13,20 +14,15 @@
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+  font-size: 22px;
 }
 
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+hr{
+  border-top: 1px solid black;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  font-weight: bold;
 }
 </style>
