@@ -13,14 +13,15 @@ class ProcessService
     {
         $host = $_SERVER['HTTP_HOST'];
         $process = new Process(['./script.sh',$id,$text,$host]);
-        $process->run();
+        //$process->run();
+        $process->start();
 
-        
+        /*
         if(! $process->isSuccessful()){
             throw new ProcessFailedException($process);
         }
         
         return $process->getOutput();
-        
+        */
     }
 }

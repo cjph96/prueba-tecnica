@@ -141,8 +141,9 @@ class ProcessController extends AbstractController
       $entityManager = $this->getDoctrine()->getManager();
       $entityManager->flush();
 
-      $msg = $process_service->start($process->id,$process->input);
+      /*$msg =*/ $process_service->start($process->id,$process->input);
 
-      return $this->json($msg);
+      //return $this->json($msg);
+      return $this->json('ok');
     }
 }
