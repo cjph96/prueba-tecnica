@@ -40,17 +40,8 @@
             </td>
             <td v-else></td>
 
-            <td v-if="process.status == 1">
-              NOT STARTED
-            </td>
-            <td v-if="process.status == 2">
-              PROCESSING
-            </td>
-            <td v-if="process.status == 3">
-              FINISHED
-            </td>
-            <td v-if="process.status == 4">
-              ERROR
+            <td>
+              {{status[process.status]}}
             </td>
 
             <td v-if="process.status == 1">
@@ -74,7 +65,8 @@ export default {
   data() {
     console.log(window.location.hostname)
     return {
-      processes: []
+      processes: [],
+      status: ["","NOT STARTED","PROCESSING","FINISHED","ERROR"]
     }
   },
   methods:{

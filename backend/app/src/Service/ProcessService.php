@@ -12,7 +12,7 @@ class ProcessService
     public function start($id,$text)
     {
         $host = $_SERVER['HTTP_HOST'];
-        $process = new Process(['./script.sh',$id,$text,$host]);
+        $process = new Process(['sh','script.sh',$id,$host,$text]);
         //$process->run();
         $process->start();
 
@@ -20,8 +20,9 @@ class ProcessService
         if(! $process->isSuccessful()){
             throw new ProcessFailedException($process);
         }
-        
-        return $process->getOutput();
         */
+        //$process->wait();
+        //return $process->getOutput();
+        
     }
 }

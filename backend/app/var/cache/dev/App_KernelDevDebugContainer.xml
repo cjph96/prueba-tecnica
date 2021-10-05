@@ -159,12 +159,20 @@
       <tag name="controller.service_arguments"/>
       <tag name="routing.route_loader"/>
     </service>
+    <service id="App\Controller\AddProcessController" class="App\Controller\AddProcessController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <argument type="service" id="App\Service\Processes\Application\AddProcess"/>
+    </service>
     <service id="App\Controller\DefaultControlller" class="App\Controller\DefaultControlller" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
       <tag name="container.service_subscriber"/>
       <call method="setContainer">
         <argument type="service" id=".service_locator.W9y3dzm.App\Controller\DefaultControlller"/>
       </call>
+    </service>
+    <service id="App\Controller\GetAllProcessController" class="App\Controller\GetAllProcessController" public="true" autowire="true" autoconfigure="true">
+      <tag name="controller.service_arguments"/>
+      <argument type="service" id="App\Service\Processes\Application\GetAllProcesess"/>
     </service>
     <service id="App\Controller\ProcessController" class="App\Controller\ProcessController" public="true" autowire="true" autoconfigure="true">
       <tag name="controller.service_arguments"/>
@@ -173,11 +181,22 @@
         <argument type="service" id=".service_locator.W9y3dzm.App\Controller\ProcessController"/>
       </call>
     </service>
-    <service id="App\Repository\ProcessRepository" class="App\Repository\ProcessRepository" autowire="true" autoconfigure="true">
+    <service id="App\Service\ProcessService" class="App\Service\ProcessService" autowire="true" autoconfigure="true"/>
+    <service id="App\Service\Processes\Application\AddProcess" class="App\Service\Processes\Application\AddProcess" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Service\Processes\Infraestructure\ProcesessDoctrineProxyRepository"/>
+    </service>
+    <service id="App\Service\Processes\Application\GetAllProcesess" class="App\Service\Processes\Application\GetAllProcesess" autowire="true" autoconfigure="true">
+      <argument type="service" id="App\Service\Processes\Infraestructure\ProcesessDoctrineProxyRepository"/>
+    </service>
+    <service id="App\Service\Processes\Domain\Process" class="App\Service\Processes\Domain\Process" autowire="true" autoconfigure="true"/>
+    <service id="App\Service\Processes\Infraestructure\ProcesessDoctrineProxyRepository" class="App\Service\Processes\Infraestructure\ProcesessDoctrineProxyRepository" autowire="true" autoconfigure="true">
+      <argument type="service" id="doctrine.orm.default_entity_manager"/>
+    </service>
+    <service id="App\Service\Processes\Infraestructure\ProcessDoctrineRepository" class="App\Service\Processes\Infraestructure\ProcessDoctrineRepository" autowire="true" autoconfigure="true">
       <tag name="doctrine.repository_service"/>
       <argument type="service" id="doctrine"/>
     </service>
-    <service id="App\Service\ProcessService" class="App\Service\ProcessService" autowire="true" autoconfigure="true"/>
+    <service id="App\Shared\UuidGenerator" class="App\Shared\UuidGenerator" autowire="true" autoconfigure="true"/>
     <service id="argument_metadata_factory" class="Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadataFactory"/>
     <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener">
       <tag name="kernel.event_subscriber"/>
@@ -1635,7 +1654,7 @@
       <factory class="Doctrine\ORM\EntityManager" method="create"/>
     </service>
     <service id="doctrine.orm.container_repository_factory" class="Doctrine\Bundle\DoctrineBundle\Repository\ContainerRepositoryFactory">
-      <argument type="service" id=".service_locator.bNvhQ_S"/>
+      <argument type="service" id=".service_locator.VwNtXcR"/>
     </service>
     <service id="doctrine.orm.manager_configurator.abstract" class="Doctrine\Bundle\DoctrineBundle\ManagerConfigurator" abstract="true">
       <argument type="collection"/>
@@ -1788,7 +1807,7 @@
       <tag name="doctrine.orm.configuration"/>
       <call method="setEntityNamespaces">
         <argument type="collection">
-          <argument key="App">App\Entity</argument>
+          <argument key="App">App</argument>
         </argument>
       </call>
       <call method="setMetadataCache">
@@ -1834,7 +1853,7 @@
     <service id="doctrine.orm.default_annotation_metadata_driver" class="Doctrine\ORM\Mapping\Driver\AnnotationDriver">
       <argument type="service" id="annotations.cached_reader"/>
       <argument type="collection">
-        <argument>/var/www/html/app/src/Entity</argument>
+        <argument>/var/www/html/app/src</argument>
       </argument>
     </service>
     <service id="cache.doctrine.orm.default.metadata" class="Symfony\Component\Cache\Adapter\ArrayAdapter"/>
@@ -2060,7 +2079,7 @@
       <argument type="collection">
         <argument key="default" type="collection">
           <argument type="collection">
-            <argument>App\Entity</argument>
+            <argument>App</argument>
             <argument type="service" id="doctrine.orm.default_annotation_metadata_driver"/>
           </argument>
         </argument>
@@ -2197,8 +2216,8 @@
     <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ProcessController" class="App\Controller\ProcessController" autowire="true" abstract="true"/>
     <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ProcessController" class="App\Controller\ProcessController" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Controller\ProcessController" class="App\Controller\ProcessController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Repository\ProcessRepository" class="App\Repository\ProcessRepository" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Repository\ProcessRepository" class="App\Repository\ProcessRepository" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id=".instanceof.Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface.0.App\Service\Processes\Infraestructure\ProcessDoctrineRepository" class="App\Service\Processes\Infraestructure\ProcessDoctrineRepository" autowire="true" abstract="true"/>
+    <service id=".abstract.instanceof.App\Service\Processes\Infraestructure\ProcessDoctrineRepository" class="App\Service\Processes\Infraestructure\ProcessDoctrineRepository" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".service_locator.0GV1BZZ" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -2593,10 +2612,10 @@
       <argument type="service" id="cache.doctrine.orm.default.result"/>
       <factory class="Doctrine\Common\Cache\Psr6\DoctrineProvider" method="wrap"/>
     </service>
-    <service id=".service_locator.bNvhQ_S" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.VwNtXcR" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="App\Repository\ProcessRepository" type="service_closure" id="App\Repository\ProcessRepository"/>
+        <argument key="App\Service\Processes\Infraestructure\ProcessDoctrineRepository" type="service_closure" id="App\Service\Processes\Infraestructure\ProcessDoctrineRepository"/>
       </argument>
     </service>
     <service id=".service_locator.KLVvNIq" class="Symfony\Component\DependencyInjection\ServiceLocator">
@@ -2692,7 +2711,7 @@
     <service id=".doctrine.orm.default_metadata_driver.inner" class="Doctrine\Persistence\Mapping\Driver\MappingDriverChain">
       <call method="addDriver">
         <argument type="service" id="doctrine.orm.default_annotation_metadata_driver"/>
-        <argument>App\Entity</argument>
+        <argument>App</argument>
       </call>
     </service>
     <service id=".errored..service_locator.KfwZsne.Symfony\Component\HttpFoundation\Response" class="Symfony\Component\HttpFoundation\Response"/>
@@ -3207,6 +3226,7 @@
     <service id="Symfony\Component\DependencyInjection\ContainerInterface" alias="service_container">
       <deprecated package="symfony/dependency-injection" version="5.1">The "%alias_id%" autowiring alias is deprecated. Define it explicitly in your app if you want to keep using it.</deprecated>
     </service>
+    <service id="App\Service\Processes\Domain\ProcesessRepository" alias="App\Service\Processes\Infraestructure\ProcesessDoctrineProxyRepository"/>
     <service id="App\Kernel" alias="kernel" public="true"/>
     <service id="Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface" alias="parameter_bag"/>
     <service id="Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface" alias="parameter_bag"/>

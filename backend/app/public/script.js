@@ -30,8 +30,13 @@ function return_VOWELS_COUNT(data_submit,host){
 
 var myArgs = process.argv.slice(2);
 var id = myArgs[0]
-var output = countVowels(myArgs[1]);
-var host = myArgs[2];
+var host = myArgs[1];
+
+var output = 0;
+myArgs.slice(2).forEach(element => {
+  output += countVowels(element);
+});
+
 
 var data = {
     "id" : id,

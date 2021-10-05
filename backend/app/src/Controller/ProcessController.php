@@ -1,5 +1,9 @@
 <?php
 
+/*
+Antigua clase, (refactorizandose a hexagonal)
+*/
+
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -7,14 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 
-use App\Entity\Process;
+use App\Entity;
 use Doctrine\ORM\EntityManagerInterface;
 use \Datetime;
 
 use App\Service\ProcessService;
 
 /**
-  * @Route("/api/process")
+  * @Route("/api/process_old")
 */
 
 class ProcessController extends AbstractController
@@ -38,6 +42,7 @@ class ProcessController extends AbstractController
     */
     public function add(Request $request): Response
     {
+      /*
       $entityManager = $this->getDoctrine()->getManager();
       $process = new Process();
 
@@ -66,6 +71,7 @@ class ProcessController extends AbstractController
       );
 
       return $this->json($resp);
+    */
     }
 
     /**

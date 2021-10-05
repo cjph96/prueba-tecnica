@@ -59,7 +59,7 @@ export default {
         "input": this.input
       }
 
-      const url = "http://"+ window.location.hostname +":8081/api/process"
+      const url = "http://"+ window.location.hostname +":8081/process"
       this.resp = await fetch(url, {
         method: 'POST',
         cache: 'no-cache',
